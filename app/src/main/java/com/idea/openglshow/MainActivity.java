@@ -1,32 +1,40 @@
 package com.idea.openglshow;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+import com.idea.openglshow.activity.SGLViewActivity;
+import com.idea.openglshow.activity.TriangleActivity;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    // Example of a call to a native method
-    TextView tv = (TextView) findViewById(R.id.sample_text);
-    tv.setText(stringFromJNI());
-
-
+        Button btnTri = (Button) findViewById(R.id.btn_tri);
+        btnTri.setOnClickListener(this);
+        Button btnPic = (Button) findViewById(R.id.btn_pic);
+        btnPic.setOnClickListener(this);
 
     }
 
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_tri:
+                startActivity(new Intent(this, TriangleActivity.class));
+
+                break;
+            case R.id.btn_pic:
+                startActivity(new Intent(this, SGLViewActivity.class));
+
+                break;
+        }
     }
 }
